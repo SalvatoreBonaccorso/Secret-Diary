@@ -145,28 +145,83 @@
     }   
 ?>
 
-<h2>HTML Forms</h2>
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<div id="error"><?php echo $error; ?></div>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="style.css">
 
-<!-- Creazione di un Form per la registrazione-->
-<form method="POST">
-    <input type="email" name="email" placeholder="La tua email" >
-    <input type="password" name="password" placeholder="La tua password">
-    <input type="checkbox" name="stayLoggedIn" value=1>
-    <!-- Quest'input hidden non sarà visibile,ma ci servirà
-        per differenziare un forma da un altro
-        Infatti in questo form attribuiamo il valore 1-->
-    <input type="hidden" name="signUp" value="1">
-    <input type="submit" value="Registrati">
-</form> 
+        <title>Secret diary</title>
+    </head>
+    <body>
+        <div class="container" id="homePageContainer">
+            <h1>Secret diary</h1>
 
-<!-- Creazione di un secondo form per loggare-->
-<form method="POST">
-    <input type="email" name="email" placeholder="La tua email" >
-    <input type="password" name="password" placeholder="La tua password">
-    <input type="checkbox" name="stayLoggedIn" value=1>
-    <!-- attribuiamo il valore 0 a questo form -->
-    <input type="hidden" name="signUp" value="0">
-    <input type="submit" value="Log In">
-</form> 
+            <div id="error"><?php echo $error; ?></div>
+
+            <!-- Creazione di un Form per la registrazione-->
+            <form method="POST">
+
+                <fieldset class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="La tua email" >
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="La tua password">
+                </fieldset> 
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="stayLoggedIn" value=1> Rimani loggato
+                    </label>
+                </div>
+
+                <!-- Quest'input hidden non sarà visibile,ma ci servirà
+                    per differenziare un forma da un altro
+                    Infatti in questo form attribuiamo il valore 1-->
+                <fieldset class="form-group">
+                    <input type="hidden" name="signUp" value="1">
+                    <input type="submit" class="btn btn-success" value="Registrati">
+                </fieldset>
+
+            </form> 
+
+            <!-- Creazione di un secondo form per loggare-->
+            <form method="POST">
+
+                <fieldset class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="La tua email" >
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="La tua password">
+                </fieldset>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="stayLoggedIn" value=1> Rimani loggato
+                    </label>
+                </div>
+
+                <!-- attribuiamo il valore 0 a questo form -->
+                <fieldset class="form-group">
+                    <input type="hidden" name="signUp" value="0">
+                    <input type="submit" class="btn btn-success" value="Log In">
+                </fieldset>
+            </form> 
+
+
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        </div>
+    </body>
+</html>
