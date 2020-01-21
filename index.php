@@ -60,15 +60,12 @@
                     // "mysqli_insert_id()" ci ritorna l'id dell'utente appena inserito 
                     $id = mysqli_insert_id($link);
 
-                    $passwordDecripted = md5(md5($id)."password");
-                    
                     // effettuo il salto della password sull'id dell'utente per codificare la password
-                    
-                    
-                    //$query = "UPDATE 'utente' SET password = '".md5(md5($id).$password)."' WHERE id = ".$id." LIMIT 1";
-                    
-                    $query = "UPDATE 'utente' SET password = '".$passwordDecripted."' WHERE id = ".$id." LIMIT 1";
+                    $passwordDecripted = md5(md5($id)."password");
 
+                    // aggiorno la password inserita nel database con il valore decriptato
+                    $query = "UPDATE utente SET `password` = '$passwordDecripted' WHERE id = $id LIMIT 1";
+                    
                     mysqli_query($link, $query);
 
                     // quando l'utente si registra
