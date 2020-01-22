@@ -13,27 +13,39 @@
 
     // verifichiamo se esiste la variabile in sessione
     if(array_key_exists("id", $_SESSION)) {
-        echo "<p>Utente loggato. <a href='index.php?logout=1'>Log out</a></p>";
-    }
-    else{
+
+        include 'connection.php';
+        $diary='';
+        //echo 'test';
+        $sql ="select diario from utente where id=".(int)$_SESSION['id'];
+
+        $query= mysqli_query($link,$sql);
+        $row = mysqli_fetch_array($query);
+        $diary = $row['diario'];
+    } else {
+        
         header("Location: index.php");
+        
     }
-//         include 'connection.php';
-//         $diary='';
-//         //echo 'test';
-//         $sql ="select diary from users where id=".(int)$_SESSION['id'];
 
-//         $query= mysqli_query($link,$sql);
-//         $row = mysqli_fetch_array($query);
-//         $diary = $row['diary'];
-//     } else {
-        
-//         header("Location: index.php");
-        
-//     }
+include 'header.php';
 
-// include 'header.php';
+?>
 
+<nav class="navbar navbar-light bg-faded navbar-fixed-top">
+    <a class="navbar-brand" href="#">Il mio diario segreto</a>
+    <div class="pull-xs-right">
+        <a class="btn btn-success-outline" href="index.php?logout=1">Esci</a>
+    </div>
+</nav>
 
+<div class="container-fluid" id="containerLoggedInPage">
+    <form>  
+        <textarea id="diary" class="form-control"><?=$diary?></textarea>
+    </form>
 
+</div> 
+
+<?php
+include 'footer.php';
 ?>

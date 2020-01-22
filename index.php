@@ -27,18 +27,8 @@
     // "array_key_exists" verifica se esiste la chiave nell'array POST ( chiave,array ) 
     if (array_key_exists('email', $_POST) OR array_key_exists('password', $_POST)) {
 
-        // dati di connessione al mio database MySQL
-        $db_host = '127.0.0.1';
-        $db_user = 'root';
-        $db_pass = 'root';
-        $db_name = 'diario_segreto';
-
-        // connessione al database
-        $link = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
-        
-        if (mysqli_connect_error()) {      
-            die ("C'è stato un errore nel collegamento al database");    
-        }
+        // includo la pagina relativa alla connessione al database
+        include_once 'connection.php';
 
         // recupero i valori dei campi e li assegno alle variabili omonime
         $email = $_POST['email'];
@@ -143,107 +133,84 @@
             }         
         }
     }   
+include 'header.php';
 ?>
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<div class="container" id="homePageContainer">
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="style.css">
+    <div id="error">
+        <?php 
+            if($error!=''){
+                echo '  <div class="alert alert-danger">'.$error.'</div>';   
+            }
+        ?>
+    </div>
 
-        <title>Secret diary</title>
-    </head>
-    <body>
-        <div class="container" id="homePageContainer">
-            <h1>Diario segreto</h1>
+    <h1>Diario segreto</h1>
 
-            <p><strong>Conserva i tuoi pensieri in modo sicuro e permanente.</strong></p>
-            <div id="error"><?php echo $error; ?></div>
+    <p><strong>Conserva i tuoi pensieri in modo sicuro e permanente.</strong></p>
+    <div id="error"><?php echo $error; ?></div>
 
-            <!-- Creazione di un Form per la registrazione-->
-            <form method="POST" id="signUpForm">
+    <!-- Creazione di un Form per la registrazione-->
+    <form method="POST" id="signUpForm">
 
-                <p>Interessato? Registrati ora.</p>
+        <p>Interessato? Registrati ora.</p>
 
-                <fieldset class="form-group">
-                    <input type="email" class="form-control" name="email" placeholder="La tua email" >
-                </fieldset>
+        <fieldset class="form-group">
+            <input type="email" class="form-control" name="email" placeholder="La tua email" >
+        </fieldset>
 
-                <fieldset class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="La tua password">
-                </fieldset> 
+        <fieldset class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="La tua password">
+        </fieldset> 
 
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="stayLoggedIn" value=1> Rimani loggato
-                    </label>
-                </div>
-
-                <!-- Quest'input hidden non sarà visibile,ma ci servirà
-                    per differenziare un forma da un altro
-                    Infatti in questo form attribuiamo il valore 1-->
-                <fieldset class="form-group">
-                    <input type="hidden" name="signUp" value="1">
-                    <input type="submit" class="btn btn-success" value="Registrati">
-                </fieldset>
-
-                <p><a class="toggleForms" href="#">Accedi</a></p>
-            </form> 
-
-            <!-- Creazione di un secondo form per loggare-->
-            <form method="POST" id="logInForm">
-
-                <p>Effettua l'accesso utilizzando la tua email e la password.</p>
-
-                <fieldset class="form-group">
-                    <input type="email" class="form-control" name="email" placeholder="La tua email" >
-                </fieldset>
-
-                <fieldset class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="La tua password">
-                </fieldset>
-
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="stayLoggedIn" value=1> Rimani loggato
-                    </label>
-                </div>
-
-                <!-- attribuiamo il valore 0 a questo form -->
-                <fieldset class="form-group">
-                    <input type="hidden" name="signUp" value="0">
-                    <input type="submit" class="btn btn-success" value="Accedi">
-                </fieldset>
-
-                <p><a class="toggleForms" href="#">Registrati</a></p>
-
-            </form> 
-
-
-            <!-- Optional JavaScript -->
-            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        
-            <!-- applico il JQuery per far switchare tra la parte per loggare e quella per registrare
-                attraverso il bottone il link "login" -->
-            <script type="text/javascript">
-
-                // seleziono l'ID del form di login
-                $(".toggleForms").click(function(){
-                    $("#signUpForm").toggle();
-                    $("#logInForm").toggle();
-                })
-
-            </script>
-        
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="stayLoggedIn" value=1> Rimani loggato
+            </label>
         </div>
-    </body>
-</html>
+
+        <!-- Quest'input hidden non sarà visibile,ma ci servirà
+            per differenziare un forma da un altro
+            Infatti in questo form attribuiamo il valore 1-->
+        <fieldset class="form-group">
+            <input type="hidden" name="signUp" value="1">
+            <input type="submit" class="btn btn-success" value="Registrati">
+        </fieldset>
+
+        <p><a class="toggleForms" href="#">Accedi</a></p>
+    </form> 
+
+    <!-- Creazione di un secondo form per loggare-->
+    <form method="POST" id="logInForm">
+
+        <p>Effettua l'accesso utilizzando la tua email e la password.</p>
+
+        <fieldset class="form-group">
+            <input type="email" class="form-control" name="email" placeholder="La tua email" >
+        </fieldset>
+
+        <fieldset class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="La tua password">
+        </fieldset>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="stayLoggedIn" value=1> Rimani loggato
+            </label>
+        </div>
+
+        <!-- attribuiamo il valore 0 a questo form -->
+        <fieldset class="form-group">
+            <input type="hidden" name="signUp" value="0">
+            <input type="submit" class="btn btn-success" value="Accedi">
+        </fieldset>
+
+        <p><a class="toggleForms" href="#">Registrati</a></p>
+
+    </form> 
+</div>
+
+<?php
+include 'footer.php';
+?>
