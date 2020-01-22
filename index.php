@@ -149,7 +149,6 @@ include 'header.php';
     <h1>Diario segreto</h1>
 
     <p><strong>Conserva i tuoi pensieri in modo sicuro e permanente.</strong></p>
-    <div id="error"><?php echo $error; ?></div>
 
     <!-- Creazione di un Form per la registrazione-->
     <form method="POST" id="signUpForm">
